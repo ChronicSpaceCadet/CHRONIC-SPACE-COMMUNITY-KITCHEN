@@ -5,9 +5,7 @@
     <title>Chronic Space Kitchen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -15,7 +13,7 @@
             background: radial-gradient(circle at top,
                 #a855f7 0%, #22c55e 40%, #0f172a 100%);
             color: #fff;
-            overflow: hidden; /* full-screen, no scroll */
+            overflow: hidden;
         }
 
         .page {
@@ -28,7 +26,6 @@
             padding: 20px;
         }
 
-        /* Comic outline + halftone feel */
         .comic-box {
             border: 4px solid #000;
             box-shadow: 0 0 0 3px #000;
@@ -36,7 +33,6 @@
             position: relative;
         }
 
-        /* Title section */
         .title-wrap {
             text-align: center;
             padding: 10px 30px;
@@ -79,14 +75,11 @@
             bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 0;
-            height: 0;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
             border-top: 12px solid #22c55e;
         }
 
-        /* Panel strip */
         .panel-strip {
             display: flex;
             gap: 10px;
@@ -136,16 +129,11 @@
             box-shadow: 0 0 0 3px #22c55e;
         }
 
-        /* Door + nav */
         .bottom-area {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 12px;
-        }
-
-        .door-wrap {
-            text-align: center;
         }
 
         .door-label {
@@ -156,44 +144,7 @@
             margin-bottom: 6px;
         }
 
-        .door {
-            width: 120px;
-            height: 180px;
-            background: linear-gradient(#0f172a, #1e293b);
-            border: 4px solid #000;
-            border-radius: 6px;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 0 0 3px #000;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        .door::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            right: 18px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #facc15;
-            box-shadow: 0 0 0 2px #000;
-        }
-
-        .door::after {
-            content: "";
-            position: absolute;
-            inset: 8px;
-            border: 2px solid #22c55e;
-            border-radius: 4px;
-        }
-
-        .door:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 12px 4px #22c55e;
-        }
-
-        /* Comic burst overlay */
+        /* Burst overlay */
         .burst-overlay {
             position: fixed;
             inset: 0;
@@ -214,7 +165,6 @@
             text-shadow: 4px 4px 0 #000;
         }
 
-        /* Nav objects */
         .nav-row {
             display: flex;
             gap: 10px;
@@ -236,114 +186,83 @@
             transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
 
-        .nav-item::before {
-            content: "";
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #f97316;
-            box-shadow: 0 0 0 2px #000;
-        }
-
         .nav-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 0 10px 3px #22c55e;
         }
 
-        /* Panel entrance animation */
         @keyframes panelIn {
-            0% {
-                transform: translateY(40px) scale(0.95);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
+            0% { transform: translateY(40px) scale(0.95); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
         }
 
-        /* Halftone dots */
         .dots {
             position: fixed;
             inset: 0;
             pointer-events: none;
             opacity: 0.25;
-            background-image:
-                radial-gradient(circle, #000 1px, transparent 1px);
+            background-image: radial-gradient(circle, #000 1px, transparent 1px);
             background-size: 6px 6px;
             mix-blend-mode: multiply;
         }
 
         @media (max-width: 768px) {
-            .panel-strip {
-                flex-direction: column;
-            }
-            .title {
-                font-size: 2rem;
-            }
+            .panel-strip { flex-direction: column; }
+            .title { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
 <div class="dots"></div>
+
 <div class="burst-overlay" id="burst">
     <div class="burst-text">KRA-KOOOM!</div>
 </div>
 
 <div class="page comic-box">
 
-    <!-- TITLE -->
     <div class="title-wrap">
         <div class="title">CHRONIC SPACE KITCHEN</div>
-        <div class="speech-bubble">
-            A living infused edible universe.
-        </div>
+        <div class="speech-bubble">A living infused edible universe.</div>
     </div>
 
-    <!-- PANELS -->
     <div class="panel-strip">
         <div class="panel">
             <div class="panel-title">THE UNIVERSE</div>
-            <div class="panel-text">
-                Infused creativity powers every corner of this cosmic kitchen world.
-            </div>
+            <div class="panel-text">Infused creativity powers every corner of this cosmic kitchen world.</div>
         </div>
         <div class="panel">
             <div class="panel-title">THE CHEFS</div>
-            <div class="panel-text">
-                Meet the infused chefs shaping the menu and the energy of the space.
-            </div>
+            <div class="panel-text">Meet the infused chefs shaping the menu and the energy of the space.</div>
         </div>
         <div class="panel">
             <div class="panel-title">RECIPE CARDS</div>
-            <div class="panel-text">
-                Comic-style edible cards from the community, ready to explore and remix.
-            </div>
+            <div class="panel-text">Comic-style edible cards from the community, ready to explore and remix.</div>
         </div>
         <div class="panel">
             <div class="panel-title">SUBMISSIONS</div>
-            <div class="panel-text">
-                Drop your creations into the kitchen and become part of the universe.
-            </div>
+            <div class="panel-text">Drop your creations into the kitchen and become part of the universe.</div>
         </div>
         <div class="panel">
             <div class="panel-title">THE KITCHEN</div>
-            <div class="panel-text">
-                Cosmic pots, infused ingredients, and a living space to cook and connect.
-            </div>
+            <div class="panel-text">Cosmic pots, infused ingredients, and a living space to cook and connect.</div>
         </div>
     </div>
 
-    <!-- DOOR + NAV -->
     <div class="bottom-area">
-        <div class="door-wrap">
-            <div class="door-label">ENTER THE KITCHEN</div>
-            <div class="door" id="door"></div>
-        </div>
+        <div class="door-label">ENTER THE KITCHEN</div>
+
+        <!-- NEW COMIC SVG DOOR -->
+        <svg id="comicDoor" width="140" height="220" viewBox="0 0 140 220" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;">
+            <rect x="5" y="5" width="130" height="210" fill="#1e293b" stroke="#000" stroke-width="6"/>
+            <rect x="25" y="25" width="90" height="170" fill="#0f172a" stroke="#22c55e" stroke-width="4"/>
+            <circle cx="105" cy="110" r="10" fill="#facc15" stroke="#000" stroke-width="4"/>
+            <rect x="5" y="5" width="130" height="210" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="10 6"/>
+            <text x="70" y="20" text-anchor="middle" font-size="18" font-weight="bold" fill="#f97316" stroke="#000" stroke-width="2">
+                DOOR
+            </text>
+        </svg>
 
         <div class="nav-row">
             <div class="nav-item">Recipe Cards</div>
@@ -355,7 +274,6 @@
 </div>
 
 <script>
-    // Hybrid panel animation: slide in on load + hover effects already in CSS
     window.addEventListener('load', () => {
         const panels = document.querySelectorAll('.panel');
         panels.forEach((panel, index) => {
@@ -364,22 +282,20 @@
         });
     });
 
-    // Comic burst door effect
-    const door = document.getElementById('door');
+    const door = document.getElementById('comicDoor');
     const burst = document.getElementById('burst');
 
     door.addEventListener('click', () => {
         burst.style.transition = 'opacity 0.25s ease-out';
         burst.style.opacity = '1';
 
-        // After burst, you can redirect to main kitchen page
         setTimeout(() => {
-            // TODO: change this to your main kitchen URL or route
-            // e.g. window.location.href = 'kitchen.html';
             burst.style.opacity = '0';
+            // window.location.href = 'kitchen.html';  <-- add your kitchen page later
         }, 700);
     });
 </script>
 
 </body>
 </html>
+
