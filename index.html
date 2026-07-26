@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chronic Space Kitchen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at top,
+                #a855f7 0%, #22c55e 40%, #0f172a 100%);
+            color: #fff;
+            overflow: hidden; /* full-screen, no scroll */
+        }
+
+        .page {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        /* Comic outline + halftone feel */
+        .comic-box {
+            border: 4px solid #000;
+            box-shadow: 0 0 0 3px #000;
+            background: rgba(15, 23, 42, 0.85);
+            position: relative;
+        }
+
+        /* Title section */
+        .title-wrap {
+            text-align: center;
+            padding: 10px 30px;
+        }
+
+        .title {
+            font-size: 2.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f97316;
+            text-shadow:
+                3px 3px 0 #000,
+                0 0 15px #22c55e;
+            animation: wobble 2s infinite ease-in-out;
+        }
+
+        @keyframes wobble {
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-2px) rotate(-1deg); }
+            50% { transform: translateY(2px) rotate(1deg); }
+            75% { transform: translateY(-1px) rotate(0.5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        .speech-bubble {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #22c55e;
+            color: #000;
+            font-weight: bold;
+            border: 3px solid #000;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .speech-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 12px solid #22c55e;
+        }
+
+        /* Panel strip */
+        .panel-strip {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            max-width: 1000px;
+        }
+
+        .panel {
+            flex: 1;
+            min-width: 120px;
+            background: #0f172a;
+            border: 3px solid #000;
+            border-radius: 8px;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(40px);
+            opacity: 0;
+        }
+
+        .panel-title {
+            font-weight: bold;
+            color: #22c55e;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .panel-text {
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .panel::before {
+            content: "WHAM!";
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #facc15;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .panel:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 0 0 3px #22c55e;
+        }
+
+        /* Door + nav */
+        .bottom-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .door-wrap {
+            text-align: center;
+        }
+
+        .door-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #f97316;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 6px;
+        }
+
+        .door {
+            width: 120px;
+            height: 180px;
+            background: linear-gradient(#0f172a, #1e293b);
+            border: 4px solid #000;
+            border-radius: 6px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 0 0 3px #000;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .door::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 18px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #facc15;
+            box-shadow: 0 0 0 2px #000;
+        }
+
+        .door::after {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border: 2px solid #22c55e;
+            border-radius: 4px;
+        }
+
+        .door:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 12px 4px #22c55e;
+        }
+
+        /* Comic burst overlay */
+        .burst-overlay {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .burst-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: bold;
+            color: #f97316;
+            text-shadow: 4px 4px 0 #000;
+        }
+
+        /* Nav objects */
+        .nav-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-item {
+            min-width: 110px;
+            padding: 8px 12px;
+            background: #22c55e;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            border: 3px solid #000;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 0 0 3px #000;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .nav-item::before {
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #f97316;
+            box-shadow: 0 0 0 2px #000;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 10px 3px #22c55e;
+        }
+
+        /* Panel entrance animation */
+        @keyframes panelIn {
+            0% {
+                transform: translateY(40px) scale(0.95);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Halftone dots */
+        .dots {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.25;
+            background-image:
+                radial-gradient(circle, #000 1px, transparent 1px);
+            background-size: 6px 6px;
+            mix-blend-mode: multiply;
+        }
+
+        @media (max-width: 768px) {
+            .panel-strip {
+                flex-direction: column;
+            }
+            .title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dots"></div>
+<div class="burst-overlay" id="burst">
+    <div class="burst-text">KRA-KOOOM!</div>
+</div>
+
+<div class="page comic-box">
+
+    <!-- TITLE -->
+    <div class="title-wrap">
+        <div class="title">CHRONIC SPACE KITCHEN</div>
+        <div class="speech-bubble">
+            A living infused edible universe.
+        </div>
+    </div>
+
+    <!-- PANELS -->
+    <div class="panel-strip">
+        <div class="panel">
+            <div class="panel-title">THE UNIVERSE</div>
+            <div class="panel-text">
+                Infused creativity powers every corner of this cosmic kitchen world.
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-title">THE CHEFS</div>
+            <div class="panel-text">
+                Meet the infused chefs shaping the menu and the energy of the space.
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-title">RECIPE CARDS</div>
+            <div class="panel-text">
+                Comic-style edible cards from the community, ready to explore and remix.
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-title">SUBMISSIONS</div>
+            <div class="panel-text">
+                Drop your creations into the kitchen and become part of the universe.
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-title">THE KITCHEN</div>
+            <div class="panel-text">
+                Cosmic pots, infused ingredients, and a living space to cook and connect.
+            </div>
+        </div>
+    </div>
+
+    <!-- DOOR + NAV -->
+    <div class="bottom-area">
+        <div class="door-wrap">
+            <div class="door-label">ENTER THE KITCHEN</div>
+            <div class="door" id="door"></div>
+        </div>
+
+        <div class="nav-row">
+            <div class="nav-item">Recipe Cards</div>
+            <div class="nav-item">Chefs</div>
+            <div class="nav-item">Submissions</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Hybrid panel animation: slide in on load + hover effects already in CSS
+    window.addEventListener('load', () => {
+        const panels = document.querySelectorAll('.panel');
+        panels.forEach((panel, index) => {
+            panel.style.animation = `panelIn 0.6s ease-out forwards`;
+            panel.style.animationDelay = `${0.15 * index}s`;
+        });
+    });
+
+    // Comic burst door effect
+    const door = document.getElementById('door');
+    const burst = document.getElementById('burst');
+
+    door.addEventListener('click', () => {
+        burst.style.transition = 'opacity 0.25s ease-out';
+        burst.style.opacity = '1';
+
+        // After burst, you can redirect to main kitchen page
+        setTimeout(() => {
+            // TODO: change this to your main kitchen URL or route
+            // e.g. window.location.href = 'kitchen.html';
+            burst.style.opacity = '0';
+        }, 700);
+    });
+</script>
+
+</body>
+</html>
