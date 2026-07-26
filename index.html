@@ -13,16 +13,16 @@
             background: radial-gradient(circle at top,
                 #a855f7 0%, #22c55e 40%, #0f172a 100%);
             color: #fff;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .page {
             width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             padding: 20px;
         }
 
@@ -31,65 +31,47 @@
             box-shadow: 0 0 0 3px #000;
             background: rgba(15, 23, 42, 0.85);
             position: relative;
+            padding-bottom: 40px;
         }
 
-        .title-wrap {
-            text-align: center;
-            padding: 10px 30px;
+        /* BANNER */
+        .banner {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            display: block;
+            margin: 20px auto 30px auto;
+
+            border: 6px solid #000;
+            box-shadow:
+                0 0 0 4px #000,
+                0 0 20px #22c55e,
+                0 0 40px #a855f7,
+                0 0 60px #22c55e;
+
+            animation: bannerPop 1.2s ease-out forwards;
+            transform: scale(0.9) rotate(-1deg);
         }
 
-        .title {
-            font-size: 2.6rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #f97316;
-            text-shadow:
-                3px 3px 0 #000,
-                0 0 15px #22c55e;
-            animation: wobble 2s infinite ease-in-out;
+        @keyframes bannerPop {
+            0% { transform: scale(0.85) rotate(-2deg); opacity: 0; }
+            60% { transform: scale(1.05) rotate(1deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); }
         }
 
-        @keyframes wobble {
-            0% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-2px) rotate(-1deg); }
-            50% { transform: translateY(2px) rotate(1deg); }
-            75% { transform: translateY(-1px) rotate(0.5deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
-
-        .speech-bubble {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 16px;
-            background: #22c55e;
-            color: #000;
-            font-weight: bold;
-            border: 3px solid #000;
-            border-radius: 20px;
-            position: relative;
-        }
-
-        .speech-bubble::after {
-            content: "";
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 12px solid #22c55e;
-        }
-
+        /* PANELS */
         .panel-strip {
             display: flex;
             gap: 10px;
             padding: 10px;
             max-width: 1000px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .panel {
             flex: 1;
-            min-width: 120px;
+            min-width: 140px;
             background: #0f172a;
             border: 3px solid #000;
             border-radius: 8px;
@@ -129,11 +111,13 @@
             box-shadow: 0 0 0 3px #22c55e;
         }
 
+        /* DOOR AREA */
         .bottom-area {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 12px;
+            margin-top: 20px;
         }
 
         .door-label {
@@ -208,7 +192,6 @@
 
         @media (max-width: 768px) {
             .panel-strip { flex-direction: column; }
-            .title { font-size: 2rem; }
         }
     </style>
 </head>
@@ -222,11 +205,10 @@
 
 <div class="page comic-box">
 
-    <div class="title-wrap">
-        <div class="title">CHRONIC SPACE KITCHEN</div>
-        <div class="speech-bubble">A living infused edible universe.</div>
-    </div>
+    <!-- YOUR BANNER -->
+    <img src="images/chronic-space-kitchen-comic-banner (1).png" class="banner">
 
+    <!-- PANELS -->
     <div class="panel-strip">
         <div class="panel">
             <div class="panel-title">THE UNIVERSE</div>
@@ -250,10 +232,11 @@
         </div>
     </div>
 
+    <!-- DOOR + NAV -->
     <div class="bottom-area">
         <div class="door-label">ENTER THE KITCHEN</div>
 
-        <!-- NEW COMIC SVG DOOR -->
+        <!-- COMIC SVG DOOR -->
         <svg id="comicDoor" width="140" height="220" viewBox="0 0 140 220" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;">
             <rect x="5" y="5" width="130" height="210" fill="#1e293b" stroke="#000" stroke-width="6"/>
             <rect x="25" y="25" width="90" height="170" fill="#0f172a" stroke="#22c55e" stroke-width="4"/>
@@ -291,11 +274,11 @@
 
         setTimeout(() => {
             burst.style.opacity = '0';
-            // window.location.href = 'kitchen.html';  <-- add your kitchen page later
         }, 700);
     });
 </script>
 
 </body>
 </html>
+
 
